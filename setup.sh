@@ -10,6 +10,8 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
+StartTimestamp="`date +%s`"
+
 # binary PATH
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH"
 
@@ -80,4 +82,7 @@ echo 'APT::Periodic::Unattended-Upgrade "1";'  >> /etc/apt/apt.conf.d/20auto-upg
 # Unitial setup
 curl -L -o- https://github.com/PeterDaveHello/Unitial/raw/master/setup.sh | bash
 
+EndTimestamp="`date +%s`"
+
+echo -e "\nTotal time spent for this build is _$(($EndTimestamp - $StartTimestamp))_ second(s)\n"
 }
