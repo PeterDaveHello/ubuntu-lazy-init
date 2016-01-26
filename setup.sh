@@ -35,6 +35,14 @@ echo 'vm.swappiness=5' >> /etc/sysctl.conf
 # no IPv6 in general
 sed -i 's/IPV6=yes/IPV6=no/g' /etc/default/ufw
 
+# enable commonly used ports (ufw)
+ufw allow 22
+ufw allow 80
+ufw allow 443
+
+# enable ufw
+echo 'y' | ufw enable
+
 # set timezone
 timedatectl set-timezone Asia/Taipei
 
