@@ -61,6 +61,10 @@ apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="
 # install some essential and useful tools
 apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install sysstat vnstat htop dstat vim tmux
 
+# modern NICs usually be 1Gbit ...
+sed -i 's/^MaxBandwidth 100$/MaxBandwidth 1000/g' /etc/vnstat.conf
+service vnstat restart
+
 # enable sysstat
 sed -i 's/ENABLED="false"/ENABLED="true"/g' /etc/default/sysstat
 service sysstat restart
