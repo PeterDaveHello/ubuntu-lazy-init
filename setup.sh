@@ -15,6 +15,21 @@ StartTimestamp="`date +%s`"
 # binary PATH
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH"
 
+# no IPv6 in general
+sed -i 's/IPV6=yes/IPV6=no/g' /etc/default/ufw
+
+# enable commonly used ports (ufw)
+ufw allow 22
+ufw allow 80
+ufw allow 443
+
+# enable ufw
+echo 'y' | ufw enable
+
+# decrease swappiness
+sysctl vm.swappiness=5
+echo 'vm.swappiness=5' >> /etc/sysctl.conf
+
 # no src in general
 sed -i 's/^deb-src/\#deb-src/g' /etc/apt/sources.list
 
@@ -27,22 +42,6 @@ if [ -r /etc/apt/sources.list.d/official-package-repositories.list ]; then
     apt_local="`grep ^deb /etc/apt/sources.list.d/official-package-repositories.list | grep ubuntu --color=never | awk '{print $2}' | sort | uniq -c | sort -r | head -n 1 | awk '{print $2}' | sed 's/\//\\\\\//g'`"
     sed -i "s/http:\/\/security.ubuntu.com\/ubuntu/$apt_local/g" /etc/apt/sources.list.d/official-package-repositories.list
 fi
-
-# decrease swappiness
-sysctl vm.swappiness=5
-echo 'vm.swappiness=5' >> /etc/sysctl.conf
-
-# no IPv6 in general
-sed -i 's/IPV6=yes/IPV6=no/g' /etc/default/ufw
-
-# enable commonly used ports (ufw)
-ufw allow 22
-ufw allow 80
-ufw allow 443
-
-# enable ufw
-echo 'y' | ufw enable
-
 # set timezone
 timedatectl set-timezone Asia/Taipei
 
