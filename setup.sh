@@ -89,7 +89,7 @@ echo 'UseDNS no' >> /etc/ssh/sshd_config
 apt-get autoremove --force-yes -y
 apt-get clean
 
-# unable unattended-upgrades
+# enable unattended-upgrades
 echo 'APT::Periodic::Update-Package-Lists "1";' > /etc/apt/apt.conf.d/20auto-upgrades
 echo 'APT::Periodic::Unattended-Upgrade "1";'  >> /etc/apt/apt.conf.d/20auto-upgrades
 
