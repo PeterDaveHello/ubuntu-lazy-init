@@ -22,6 +22,7 @@ sed -i 's/IPV6=yes/IPV6=no/g' /etc/default/ufw
 ufw allow 22
 ufw allow 80
 ufw allow 443
+ufw allow mosh
 
 # enable ufw
 echo 'y' | ufw enable
