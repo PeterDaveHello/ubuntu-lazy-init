@@ -59,6 +59,11 @@ apt-get update
 
 # upgrade/install the most important packages
 apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install dnsutils openssh-server openssh-client bash apt dpkg coreutils mount login util-linux gnupg passwd bsdutils file openssl ca-certificates ssh wget linux-firmware cpio dnsutils patch udev sudo
+
+# locale
+locale-gen en_US.UTF-8
+echo "LC_ALL=en_US.UTF-8" >> /etc/default/locale
+
 # install some essential and useful tools
 apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install sysstat vnstat htop dstat vim tmux
 
