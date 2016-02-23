@@ -100,7 +100,10 @@ echo 'APT::Periodic::Update-Package-Lists "1";' > /etc/apt/apt.conf.d/20auto-upg
 echo 'APT::Periodic::Unattended-Upgrade "1";'  >> /etc/apt/apt.conf.d/20auto-upgrades
 
 # Unitial setup
-curl -L -o- https://github.com/PeterDaveHello/Unitial/raw/master/setup.sh | bash
+curl -L -o- https://github.com/PeterDaveHello/Unitial/raw/master/setup.sh | HOME='/root/' bash
+if [ ! -z "$SUDO_USER" ]; then
+   curl -L -o- https://github.com/PeterDaveHello/Unitial/raw/master/setup.sh | sudo -u $SUDO_USER bash
+fi
 
 EndTimestamp="`date +%s`"
 
