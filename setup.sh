@@ -24,7 +24,6 @@ ufw allow 80
 ufw allow 443
 ufw allow 8000
 ufw allow 8080
-ufw allow mosh
 
 # enable ufw
 echo 'y' | ufw enable
@@ -98,6 +97,9 @@ apt-get clean
 # enable unattended-upgrades
 echo 'APT::Periodic::Update-Package-Lists "1";' > /etc/apt/apt.conf.d/20auto-upgrades
 echo 'APT::Periodic::Unattended-Upgrade "1";'  >> /etc/apt/apt.conf.d/20auto-upgrades
+
+# enable mosh ports (ufw)
+ufw allow mosh
 
 # Unitial setup
 curl -L -o- https://github.com/PeterDaveHello/Unitial/raw/master/setup.sh | HOME='/root/' bash
