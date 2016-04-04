@@ -15,8 +15,11 @@ StartTimestamp="`date +%s`"
 # binary PATH
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH"
 
-# no IPv6 in general
-sed -i 's/IPV6=yes/IPV6=no/g' /etc/default/ufw
+# simply detect IPv6 by dns config /etc/resolv.conf
+if [ "" = "`command grep 'nameserver' /etc/resolv.conf  | cut -d' ' -f 2 | grep ':'`" ]; then
+   # disable IPv6 for ufw if no IPv6 dns detected
+   sed -i 's/IPV6=yes/IPV6=no/g' /etc/default/ufw
+fi
 
 # enable commonly used ports (ufw)
 ufw allow 22
