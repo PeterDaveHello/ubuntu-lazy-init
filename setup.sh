@@ -10,6 +10,11 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
+function append() {
+    test "`tail -c 1 $2`" && echo "" >> $2
+    echo $1 >> $2
+}
+
 StartTimestamp="`date +%s`"
 
 # binary PATH
@@ -33,7 +38,7 @@ echo 'y' | ufw enable
 
 # decrease swappiness
 sysctl vm.swappiness=5
-echo 'vm.swappiness=5' >> /etc/sysctl.conf
+append 'vm.swappiness=5' /etc/sysctl.conf
 
 # no src in general
 sed -i 's/^deb-src/\#deb-src/g' /etc/apt/sources.list
@@ -65,7 +70,7 @@ apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="
 
 # locale
 locale-gen en_US.UTF-8
-echo "LC_ALL=en_US.UTF-8" >> /etc/default/locale
+append "LC_ALL=en_US.UTF-8" /etc/default/locale
 
 # install some essential and useful tools
 apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install sysstat vnstat htop dstat vim tmux
@@ -96,15 +101,15 @@ apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="
 apt-file update
 
 # disable DNS lookup for ssh
-echo 'UseDNS no' >> /etc/ssh/sshd_config
+append 'UseDNS no' /etc/ssh/sshd_config
 
 # second apt clean up
 apt-get autoremove --force-yes -y
 apt-get clean
 
 # enable unattended-upgrades
-echo 'APT::Periodic::Update-Package-Lists "1";' > /etc/apt/apt.conf.d/20auto-upgrades
-echo 'APT::Periodic::Unattended-Upgrade "1";'  >> /etc/apt/apt.conf.d/20auto-upgrades
+echo   'APT::Periodic::Update-Package-Lists "1";' > /etc/apt/apt.conf.d/20auto-upgrades
+append 'APT::Periodic::Unattended-Upgrade "1";'     /etc/apt/apt.conf.d/20auto-upgrades
 
 # enable mosh ports (ufw)
 ufw allow mosh
