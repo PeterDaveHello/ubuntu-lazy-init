@@ -11,17 +11,17 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 function append() {
-    test "`tail -c 1 $2`" && echo "" >> $2
-    echo $1 >> $2
+    test "$(tail -c 1 $2)" && echo "" >> "$2"
+    echo "$1" >> "$2"
 }
 
-StartTimestamp="`date +%s`"
+StartTimestamp="$(date +%s)"
 
 # binary PATH
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH"
 
 # simply detect IPv6 by dns config /etc/resolv.conf
-if [ "" = "`command grep 'nameserver' /etc/resolv.conf  | cut -d' ' -f 2 | grep ':'`" ]; then
+if [ "" = "$(command grep 'nameserver' /etc/resolv.conf  | cut -d' ' -f 2 | grep ':')" ]; then
    # disable IPv6 for ufw if no IPv6 dns detected
    sed -i 's/IPV6=yes/IPV6=no/g' /etc/default/ufw
 fi
@@ -44,12 +44,12 @@ append 'vm.swappiness=5' /etc/sysctl.conf
 sed -i 's/^deb-src/\#deb-src/g' /etc/apt/sources.list
 
 # replace security.ubuntu.com with a local mirror
-apt_local="`grep ^deb /etc/apt/sources.list | grep ubuntu --color=never | awk '{print $2}' | sort | uniq -c | sort -r | head -n 1 | awk '{print $2}' | sed 's/\//\\\\\//g'`"
+apt_local="$(grep ^deb /etc/apt/sources.list | grep ubuntu --color=never | awk '{print $2}' | sort | uniq -c | sort -r | head -n 1 | awk '{print $2}' | sed 's/\//\\\\\//g')"
 sed -i "s/http:\/\/security.ubuntu.com\/ubuntu/$apt_local/g" /etc/apt/sources.list
 
 # again for linuxmint config
 if [ -r /etc/apt/sources.list.d/official-package-repositories.list ]; then
-    apt_local="`grep ^deb /etc/apt/sources.list.d/official-package-repositories.list | grep ubuntu --color=never | awk '{print $2}' | sort | uniq -c | sort -r | head -n 1 | awk '{print $2}' | sed 's/\//\\\\\//g'`"
+    apt_local="$(grep ^deb /etc/apt/sources.list.d/official-package-repositories.list | grep ubuntu --color=never | awk '{print $2}' | sort | uniq -c | sort -r | head -n 1 | awk '{print $2}' | sed 's/\//\\\\\//g')"
     sed -i "s/http:\/\/security.ubuntu.com\/ubuntu/$apt_local/g" /etc/apt/sources.list.d/official-package-repositories.list
 fi
 # set timezone
@@ -117,10 +117,10 @@ ufw allow mosh
 # Unitial setup
 curl -L -o- https://github.com/PeterDaveHello/Unitial/raw/master/setup.sh | HOME='/root/' bash
 if [ ! -z "$SUDO_USER" ]; then
-   curl -L -o- https://github.com/PeterDaveHello/Unitial/raw/master/setup.sh | sudo -u $SUDO_USER bash
+   curl -L -o- https://github.com/PeterDaveHello/Unitial/raw/master/setup.sh | sudo -u "$SUDO_USER" bash
 fi
 
-EndTimestamp="`date +%s`"
+EndTimestamp="$(date +%s)"
 
-echo -e "\nTotal time spent for this build is _$(($EndTimestamp - $StartTimestamp))_ second(s)\n"
+echo -e "\nTotal time spent for this build is _$((EndTimestamp - StartTimestamp))_ second(s)\n"
 }
