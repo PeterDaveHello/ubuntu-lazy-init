@@ -92,7 +92,7 @@ apt-get autoremove --force-yes -y
 apt-get clean
 
 # now install some commonly used pacakges
-apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install tree aria2 aptitude moc bash-completion colordiff curl pbzip2 pigz fbterm fail2ban mtr-tiny ntpdate git p7zip-full mosh nmap apt-file gdebi command-not-found irssi geoip-bin w3m unzip tcpdump iftop iotop apt-show-versions lm-sensors sensord dmidecode hdparm xfsprogs smartmontools xterm mailutils unattended-upgrades p7zip-rar zram-config ppa-purge jq pxz iperf ethtool parallel whois lsof inxi realpath ufw make cpu-checker
+apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install tree aria2 aptitude moc bash-completion colordiff curl pbzip2 pigz fbterm fail2ban mtr-tiny ntpdate git p7zip-full mosh nmap apt-file gdebi command-not-found irssi geoip-bin w3m unzip tcpdump iftop iotop apt-show-versions lm-sensors sensord dmidecode hdparm xfsprogs smartmontools xterm mailutils unattended-upgrades p7zip-rar zram-config ppa-purge jq pxz iperf ethtool parallel whois lsof inxi realpath ufw make cpu-checker pv
 
 # reinstall bash-completion, sometimes it doesn't work properly
 apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install --reinstall bash-completion
