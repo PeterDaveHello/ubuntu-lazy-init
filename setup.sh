@@ -114,6 +114,10 @@ append 'APT::Periodic::Unattended-Upgrade "1";'     /etc/apt/apt.conf.d/20auto-u
 # enable mosh ports (ufw)
 ufw allow mosh
 
+# add-apt-ppa
+wget https://github.com/PeterDaveHello/add-apt-ppa/raw/v0.0.1/add-apt-ppa -O /usr/bin/add-apt-ppa
+ln -s /usr/bin/add-apt-ppa /usr/bin/apt-add-ppa
+
 # Unitial setup
 curl -L -o- https://github.com/PeterDaveHello/Unitial/raw/master/setup.sh | HOME='/root/' bash
 if [ ! -z "$SUDO_USER" ]; then
