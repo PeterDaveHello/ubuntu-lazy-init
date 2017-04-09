@@ -37,8 +37,8 @@ ufw allow 8080
 echo 'y' | ufw enable
 
 # decrease swappiness
-sysctl vm.swappiness=5
-append 'vm.swappiness=5' /etc/sysctl.conf
+sysctl vm.swappiness=5 &
+append 'vm.swappiness=5' /etc/sysctl.conf &
 
 # no src in general
 sed -i 's/^deb-src/\#deb-src/g' /etc/apt/sources.list
@@ -53,14 +53,14 @@ if [ -r /etc/apt/sources.list.d/official-package-repositories.list ]; then
     sed -i "s/http:\/\/security.ubuntu.com\/ubuntu/$apt_local/g" /etc/apt/sources.list.d/official-package-repositories.list
 fi
 # set timezone
-timedatectl set-timezone Asia/Taipei
+timedatectl set-timezone Asia/Taipei &
 
 # set unattended parameters
 export DEBIAN_FRONTEND=noninteractive
 
 # disable root ssh login
 sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
-service ssh restart
+service ssh restart &
 
 # update apt meta info
 apt-get update
@@ -70,7 +70,7 @@ apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="
 
 # sync system time
 sudo ntpdate tw.pool.ntp.org
-sudo ntpdate tw.pool.ntp.org
+sudo ntpdate tw.pool.ntp.org &
 
 # locale
 locale-gen en_US.UTF-8
@@ -81,11 +81,11 @@ apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="
 
 # modern NICs usually be 1Gbit ...
 sed -i 's/^MaxBandwidth 100$/MaxBandwidth 1000/g' /etc/vnstat.conf
-service vnstat restart
+service vnstat restart &
 
 # enable sysstat
 sed -i 's/ENABLED="false"/ENABLED="true"/g' /etc/default/sysstat
-service sysstat restart
+service sysstat restart &
 
 # now upgrade packages
 apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade
@@ -105,10 +105,10 @@ needrestart -r a
 apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install --reinstall bash-completion
 
 # apt-file update
-apt-file update
+apt-file update &
 
 # disable DNS lookup for ssh
-append 'UseDNS no' /etc/ssh/sshd_config
+append 'UseDNS no' /etc/ssh/sshd_config &
 
 # second apt clean up
 apt-get autoremove --force-yes -y
@@ -126,9 +126,9 @@ wget https://github.com/PeterDaveHello/add-apt-ppa/raw/v0.0.1/add-apt-ppa -O /us
 ln -s /usr/bin/add-apt-ppa /usr/bin/apt-add-ppa
 
 # Unitial setup
-curl -L -o- https://github.com/PeterDaveHello/Unitial/raw/master/setup.sh | HOME='/root/' bash
+curl --compressed -L -o- https://github.com/PeterDaveHello/Unitial/raw/master/setup.sh | HOME='/root/' bash
 if [ ! -z "$SUDO_USER" ]; then
-   curl -L -o- https://github.com/PeterDaveHello/Unitial/raw/master/setup.sh | sudo -u "$SUDO_USER" bash
+   curl --compressed -L -o- https://github.com/PeterDaveHello/Unitial/raw/master/setup.sh | sudo -u "$SUDO_USER" bash
 fi
 
 EndTimestamp="$(date +%s)"
