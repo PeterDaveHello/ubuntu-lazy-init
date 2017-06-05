@@ -68,6 +68,12 @@ apt-get update
 # upgrade/install the most important packages
 apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install dnsutils openssh-server openssh-client bash apt dpkg coreutils mount login util-linux gnupg passwd bsdutils file openssl ca-certificates ssh wget linux-firmware cpio dnsutils patch udev sudo ntpdate
 
+if lscpu | grep -q ^Hypervisor; then
+    if [ "$(lscpu | grep ^Hypervisor | awk '{print $3}')" = "VMware" ]; then
+        apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install open-vm-tools
+    fi
+fi
+
 # sync system time
 sudo ntpdate tw.pool.ntp.org
 sudo ntpdate tw.pool.ntp.org &
