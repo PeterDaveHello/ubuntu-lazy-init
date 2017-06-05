@@ -11,7 +11,7 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 function append() {
-    test "$(tail -c 1 $2)" && echo "" >> "$2"
+    test "$(tail -c 1 "$2")" && echo "" >> "$2"
     echo "$1" >> "$2"
 }
 
