@@ -131,6 +131,8 @@ if [ ! -z "$SUDO_USER" ]; then
    curl --compressed -L -o- https://github.com/PeterDaveHello/Unitial/raw/master/setup.sh | sudo -u "$SUDO_USER" bash
 fi
 
+wait
+
 EndTimestamp="$(date +%s)"
 
 echo -e "\nTotal time spent for this build is _$((EndTimestamp - StartTimestamp))_ second(s)\n"
