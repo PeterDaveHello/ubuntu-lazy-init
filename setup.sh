@@ -69,9 +69,15 @@ apt-get update
 apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install dnsutils openssh-server openssh-client bash apt dpkg coreutils mount login util-linux gnupg passwd bsdutils file openssl ca-certificates ssh wget linux-firmware cpio dnsutils patch udev sudo ntpdate
 
 if lscpu | grep -q ^Hypervisor; then
-    if [ "$(lscpu | grep ^Hypervisor | awk '{print $3}')" = "VMware" ]; then
-        apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install open-vm-tools
-    fi
+    Hypervisor="$(lscpu | grep ^Hypervisor | awk '{print $3}')"
+    case $Hypervisor in
+        VMware)
+            apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install open-vm-tools
+        ;;
+        KVM)
+            apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install qemu-guest-agent
+        ;;
+    esac
 fi
 
 # sync system time
