@@ -57,6 +57,7 @@ timedatectl set-timezone Asia/Taipei &
 
 # set unattended parameters
 export DEBIAN_FRONTEND=noninteractive
+export APT_LISTCHANGES_FRONTEND=none
 
 # disable root ssh login
 sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
