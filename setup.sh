@@ -44,7 +44,7 @@ append 'vm.swappiness=5' /etc/sysctl.conf &
 sed -i 's/^deb-src/\#deb-src/g' /etc/apt/sources.list
 
 # replace security.ubuntu.com with a local mirror
-apt_local="$(grep ^deb /etc/apt/sources.list | grep ubuntu --color=never | awk '{print $2}' | sort | uniq -c | sort -nr | head -n 1 | awk '{print $2}' | sed 's/\//\\\//g')"
+apt_local="$(grep ^deb /etc/apt/sources.list | grep ubuntu --color=never | awk '{print $2}' | sort | uniq -c | sort -Vr | head -n 1 | awk '{print $2}' | sed 's/\//\\\//g')"
 sed -i "s/http:\/\/security.ubuntu.com\/ubuntu/$apt_local/g" /etc/apt/sources.list
 
 # again for linuxmint config
