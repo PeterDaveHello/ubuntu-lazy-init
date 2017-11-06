@@ -37,8 +37,10 @@ ufw allow 8080
 echo 'y' | ufw enable
 
 # decrease swappiness
-sysctl vm.swappiness=5 &
-append 'vm.swappiness=5' /etc/sysctl.conf &
+sysctl vm.swappiness=5
+sysctl vm.vfs_cache_pressure=80 &
+append 'vm.swappiness=5' /etc/sysctl.conf
+append 'vm.vfs_cache_pressure=80' /etc/sysctl.conf &
 
 # no src in general
 sed -i 's/^deb-src/\#deb-src/g' /etc/apt/sources.list
