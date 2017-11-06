@@ -3,21 +3,33 @@ dist: trusty
 sudo: required
 git:
   depth: 5
-addons:
-  apt:
-    packages:
-      - cabal-install
-      - ghc
-env:
-  - PATH="$PATH:~/.cabal/bin/"
-cache:
-  directories:
-    - $HOME/.ghc
-    - $HOME/.cabal
-before_install:
-  - bash --version
-install:
-  - cabal update && cabal install ShellCheck && shellcheck --version
-script:
-  - bash -n setup.sh
-  - shellcheck -s bash setup.sh
+
+matrix:
+  include:
+  - env:
+      - task=shellcheck
+    before_install:
+      - bash --version
+      - shellcheck --version
+    script:
+      - bash -n setup.sh
+      - shellcheck -s bash setup.sh
+
+  - env:
+      - task=ubuntu1404
+    script:
+    - sudo ./setup.sh
+
+  - env:
+      - task=ubuntu1604
+    services:
+    - docker
+    script:
+    - docker run -i --rm -v "${PWD}:/ci-temp/" ubuntu:16.04 bash -c "/ci-temp/setup.sh"
+
+  - env:
+      - task=ubuntu1710
+    services:
+    - docker
+    script:
+    - docker run -i --rm -v "${PWD}:/ci-temp/" ubuntu:17.10 bash -c "/ci-temp/setup.sh"
