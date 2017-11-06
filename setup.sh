@@ -136,6 +136,9 @@ apt-get clean
 echo   'APT::Periodic::Update-Package-Lists "1";' > /etc/apt/apt.conf.d/20auto-upgrades
 append 'APT::Periodic::Unattended-Upgrade "1";'     /etc/apt/apt.conf.d/20auto-upgrades
 
+# set SSD IO scheduler to noop, determinate by /sys/block/sd*/queue/rotational
+append ' ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="0",ATTR{queue/scheduler}="noop"' /etc/udev/rules.d/60-ssd-scheduler.rules
+
 # enable mosh ports (ufw)
 ufw allow mosh
 
