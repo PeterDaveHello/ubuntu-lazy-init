@@ -92,7 +92,7 @@ locale-gen en_US.UTF-8
 append "LC_ALL=en_US.UTF-8" /etc/default/locale
 
 # install some essential and useful tools
-apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install sysstat vnstat htop dstat vim tmux
+apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install sysstat vnstat htop glances dstat vim tmux
 
 # modern NICs usually be 1Gbit ...
 sed -i 's/^MaxBandwidth 100$/MaxBandwidth 1000/g' /etc/vnstat.conf
