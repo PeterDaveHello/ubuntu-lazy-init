@@ -111,7 +111,7 @@ apt-get autoremove --force-yes -y
 apt-get clean
 
 # now install some commonly used pacakges
-apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install tree aria2 aptitude moc bash-completion colordiff curl pbzip2 pigz fbterm fail2ban mtr-tiny git p7zip-full mosh nmap apt-file gdebi command-not-found irssi geoip-bin w3m unzip tcpdump iftop iotop apt-show-versions lm-sensors sensord dmidecode hdparm xfsprogs smartmontools xterm mailutils unattended-upgrades p7zip-rar zram-config ppa-purge jq pxz iperf iperf3 ethtool parallel whois lsof inxi realpath ufw make cpu-checker pv timelimit exfat-fuse lynis debian-goodies needrestart unattended-upgrades software-properties-common rename youtube-dl
+apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install tree aria2 aptitude moc bash-completion colordiff curl pbzip2 pigz fbterm fail2ban mtr-tiny git p7zip-full mosh nmap apt-file gdebi command-not-found irssi geoip-bin w3m unzip tcpdump iftop iotop apt-show-versions lm-sensors sensord dmidecode hdparm xfsprogs smartmontools xterm mailutils unattended-upgrades p7zip-rar zram-config ppa-purge jq pxz iperf iperf3 ethtool parallel whois lsof inxi realpath ufw make cpu-checker pv timelimit exfat-fuse lynis debian-goodies needrestart software-properties-common rename youtube-dl
 
 # disable needrestart apt hook which is annoying
 sed -i 's/^DPkg/\#DPkg/g' /etc/apt/apt.conf.d/99needrestart
