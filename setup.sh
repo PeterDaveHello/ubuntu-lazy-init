@@ -69,7 +69,7 @@ service ssh restart &
 apt-get update
 
 # upgrade/install the most important packages
-apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install dnsutils openssh-server openssh-client bash apt dpkg coreutils mount login util-linux gnupg passwd bsdutils file openssl ca-certificates ssh wget linux-firmware cpio dnsutils patch udev sudo ntpdate
+apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install apt bash bsdutils ca-certificates coreutils cpio dnsutils dpkg file gnupg linux-firmware login mount ntpdate openssh-client openssh-server openssl passwd patch ssh sudo udev util-linux wget
 
 if lscpu | grep -q ^Hypervisor; then
     Hypervisor="$(lscpu | grep ^Hypervisor | awk '{print $3}')"
@@ -92,7 +92,7 @@ locale-gen en_US.UTF-8
 append "LC_ALL=en_US.UTF-8" /etc/default/locale
 
 # install some essential and useful tools
-apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install sysstat vnstat htop glances dstat vim tmux
+apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install dstat glances htop sysstat tmux vim vnstat
 
 # modern NICs usually be 1Gbit ...
 sed -i 's/^MaxBandwidth 100$/MaxBandwidth 1000/g' /etc/vnstat.conf
@@ -111,7 +111,7 @@ apt-get autoremove --force-yes -y
 apt-get clean
 
 # now install some commonly used pacakges
-apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install tree aria2 aptitude moc bash-completion colordiff curl pbzip2 pigz fbterm fail2ban mtr-tiny git p7zip-full mosh nmap apt-file gdebi command-not-found irssi geoip-bin w3m unzip tcpdump iftop iotop apt-show-versions lm-sensors sensord dmidecode hdparm xfsprogs smartmontools xterm mailutils unattended-upgrades p7zip-rar zram-config ppa-purge jq pxz iperf iperf3 ethtool parallel whois lsof inxi realpath ufw make cpu-checker pv timelimit exfat-fuse lynis debian-goodies needrestart software-properties-common rename youtube-dl
+apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install apt-file aptitude apt-show-versions aria2 bash-completion colordiff command-not-found cpu-checker curl debian-goodies dmidecode ethtool exfat-fuse fail2ban fbterm gdebi geoip-bin git hdparm iftop inxi iotop iperf iperf3 irssi jq lm-sensors lsof lynis mailutils make moc mosh mtr-tiny needrestart nmap p7zip-full p7zip-rar parallel pbzip2 pigz ppa-purge pv pxz realpath rename sensord smartmontools software-properties-common tcpdump timelimit tree ufw unattended-upgrades unzip w3m whois xfsprogs xterm youtube-dl zram-config
 
 # disable needrestart apt hook which is annoying
 sed -i 's/^DPkg/\#DPkg/g' /etc/apt/apt.conf.d/99needrestart
