@@ -28,8 +28,8 @@ matrix:
     - docker run -i --rm -v "${PWD}:/ci-temp/" ubuntu:16.04 bash -c "/ci-temp/setup.sh"
 
   - env:
-      - task=ubuntu1710
+      - task=ubuntu1804
     services:
     - docker
     script:
-    - docker run -i --rm -v "${PWD}:/ci-temp/" ubuntu:17.10 bash -c "/ci-temp/setup.sh"
+    - docker run -i --rm -v "${PWD}:/ci-temp/" ubuntu:18.04 bash -c "/ci-temp/setup.sh"
