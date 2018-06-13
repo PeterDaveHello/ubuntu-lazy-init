@@ -111,7 +111,7 @@ apt-get autoremove --force-yes -y
 apt-get clean
 
 # now install some commonly used pacakges
-apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install apt-file aptitude apt-show-versions aria2 bash-completion colordiff command-not-found cpu-checker curl debian-goodies dmidecode ethtool exfat-fuse fail2ban fbterm gdebi geoip-bin git hdparm iftop inxi iotop iperf iperf3 irssi jq lm-sensors lsof lynis mailutils make moc mosh mtr-tiny needrestart nmap p7zip-full p7zip-rar parallel pbzip2 pigz ppa-purge pv pxz realpath rename sensord smartmontools software-properties-common tcpdump timelimit tree ufw unattended-upgrades unzip w3m whois xfsprogs xterm youtube-dl zram-config
+apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install apt-file aptitude apt-show-versions aria2 bash-completion colordiff command-not-found cpu-checker curl debian-goodies dmidecode ethtool exfat-fuse fail2ban fbterm gdebi geoip-bin git hdparm iftop inxi iotop iperf iperf3 irssi jq lm-sensors lsof lynis mailutils make moc mosh mtr-tiny needrestart nmap p7zip-full p7zip-rar parallel pbzip2 pigz ppa-purge pv pxz realpath rename sensord smartmontools software-properties-common tcpdump timelimit tree ufw unattended-upgrades unzip w3m whois xfsprogs xterm youtube-dl zram-config ioping
 
 # disable needrestart apt hook which is annoying
 sed -i 's/^DPkg/\#DPkg/g' /etc/apt/apt.conf.d/99needrestart
