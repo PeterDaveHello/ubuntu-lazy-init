@@ -6,8 +6,8 @@ set -x
 {
 
 if [ "$(id -u)" != "0" ]; then
-   echo "Please give me root permission" 1>&2
-   exit 1
+    echo "Please give me root permission" 1>&2
+    exit 1
 fi
 
 function append() {
@@ -21,9 +21,9 @@ StartTimestamp="$(date +%s)"
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH"
 
 # simply detect IPv6 by dns config /etc/resolv.conf
-if [ "" = "$(command grep 'nameserver' /etc/resolv.conf  | cut -d' ' -f 2 | grep ':')" ]; then
-   # disable IPv6 for ufw if no IPv6 dns detected
-   sed -i 's/IPV6=yes/IPV6=no/g' /etc/default/ufw
+if [ "" = "$(command grep 'nameserver' /etc/resolv.conf | cut -d' ' -f 2 | grep ':')" ]; then
+    # disable IPv6 for ufw if no IPv6 dns detected
+    sed -i 's/IPV6=yes/IPV6=no/g' /etc/default/ufw
 fi
 
 # enable commonly used ports (ufw)
@@ -76,10 +76,10 @@ if lscpu | grep -q ^Hypervisor; then
     case $Hypervisor in
         VMware)
             apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install open-vm-tools
-        ;;
+            ;;
         KVM)
             apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install qemu-guest-agent
-        ;;
+            ;;
     esac
 fi
 
@@ -133,8 +133,8 @@ apt-get autoremove --force-yes -y
 apt-get clean
 
 # enable unattended-upgrades
-echo   'APT::Periodic::Update-Package-Lists "1";' > /etc/apt/apt.conf.d/20auto-upgrades
-append 'APT::Periodic::Unattended-Upgrade "1";'     /etc/apt/apt.conf.d/20auto-upgrades
+echo 'APT::Periodic::Update-Package-Lists "1";' > /etc/apt/apt.conf.d/20auto-upgrades
+append 'APT::Periodic::Unattended-Upgrade "1";' /etc/apt/apt.conf.d/20auto-upgrades
 
 # set SSD IO scheduler to noop, determinate by /sys/block/sd*/queue/rotational
 append ' ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="0",ATTR{queue/scheduler}="noop"' /etc/udev/rules.d/60-ssd-scheduler.rules
@@ -149,7 +149,7 @@ ln -s /usr/bin/add-apt-ppa /usr/bin/apt-add-ppa
 # Unitial setup
 curl --compressed -L -o- https://github.com/PeterDaveHello/Unitial/raw/master/setup.sh | HOME='/root/' bash
 if [ ! -z "$SUDO_USER" ]; then
-   curl --compressed -L -o- https://github.com/PeterDaveHello/Unitial/raw/master/setup.sh | sudo -u "$SUDO_USER" bash
+    curl --compressed -L -o- https://github.com/PeterDaveHello/Unitial/raw/master/setup.sh | sudo -u "$SUDO_USER" bash
 fi
 
 wait
