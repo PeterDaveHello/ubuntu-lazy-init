@@ -6,13 +6,13 @@ set -x
 {
 
 if [ "$(id -u)" != "0" ]; then
-    echo "Please give me root permission" 1>&2
-    exit 1
+  echo "Please give me root permission" 1>&2
+  exit 1
 fi
 
 function append() {
-    test "$(tail -c 1 "$2")" && echo "" >> "$2"
-    echo "$1" >> "$2"
+  test "$(tail -c 1 "$2")" && echo "" >> "$2"
+  echo "$1" >> "$2"
 }
 
 StartTimestamp="$(date +%s)"
@@ -22,8 +22,8 @@ export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH"
 
 # simply detect IPv6 by dns config /etc/resolv.conf
 if [ "" = "$(command grep 'nameserver' /etc/resolv.conf | cut -d' ' -f 2 | grep ':')" ]; then
-    # disable IPv6 for ufw if no IPv6 dns detected
-    sed -i 's/IPV6=yes/IPV6=no/g' /etc/default/ufw
+  # disable IPv6 for ufw if no IPv6 dns detected
+  sed -i 's/IPV6=yes/IPV6=no/g' /etc/default/ufw
 fi
 
 # enable commonly used ports (ufw)
@@ -51,8 +51,8 @@ sed -i "s/http:\/\/security.ubuntu.com\/ubuntu/$apt_local/g" /etc/apt/sources.li
 
 # again for linuxmint config
 if [ -r /etc/apt/sources.list.d/official-package-repositories.list ]; then
-    apt_local="$(grep ^deb /etc/apt/sources.list.d/official-package-repositories.list | grep ubuntu --color=never | awk '{print $2}' | sort | uniq -c | sort -nr | head -n 1 | awk '{print $2}' | sed 's/\//\\\//g')"
-    sed -i "s/http:\/\/security.ubuntu.com\/ubuntu/$apt_local/g" /etc/apt/sources.list.d/official-package-repositories.list
+  apt_local="$(grep ^deb /etc/apt/sources.list.d/official-package-repositories.list | grep ubuntu --color=never | awk '{print $2}' | sort | uniq -c | sort -nr | head -n 1 | awk '{print $2}' | sed 's/\//\\\//g')"
+  sed -i "s/http:\/\/security.ubuntu.com\/ubuntu/$apt_local/g" /etc/apt/sources.list.d/official-package-repositories.list
 fi
 # set timezone
 timedatectl set-timezone Asia/Taipei &
@@ -72,15 +72,15 @@ apt-get update
 apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install apt bash bsdutils ca-certificates coreutils cpio dnsutils dpkg file gnupg linux-firmware login mount ntpdate openssh-client openssh-server openssl passwd patch ssh sudo udev util-linux wget
 
 if lscpu | grep -q ^Hypervisor; then
-    Hypervisor="$(lscpu | grep ^Hypervisor | awk '{print $3}')"
-    case $Hypervisor in
-        VMware)
-            apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install open-vm-tools
-            ;;
-        KVM)
-            apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install qemu-guest-agent
-            ;;
-    esac
+  Hypervisor="$(lscpu | grep ^Hypervisor | awk '{print $3}')"
+  case $Hypervisor in
+    VMware)
+      apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install open-vm-tools
+      ;;
+    KVM)
+      apt-get --force-yes -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install qemu-guest-agent
+      ;;
+  esac
 fi
 
 # sync system time
@@ -149,7 +149,7 @@ ln -s /usr/bin/add-apt-ppa /usr/bin/apt-add-ppa
 # Unitial setup
 curl --compressed -L -o- https://github.com/PeterDaveHello/Unitial/raw/master/setup.sh | HOME='/root/' bash
 if [ ! -z "$SUDO_USER" ]; then
-    curl --compressed -L -o- https://github.com/PeterDaveHello/Unitial/raw/master/setup.sh | sudo -u "$SUDO_USER" bash
+  curl --compressed -L -o- https://github.com/PeterDaveHello/Unitial/raw/master/setup.sh | sudo -u "$SUDO_USER" bash
 fi
 
 wait
