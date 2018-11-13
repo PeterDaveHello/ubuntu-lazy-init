@@ -13,7 +13,7 @@ matrix:
       - shellcheck --version
     script:
       - bash -n setup.sh
-      - shellcheck -s bash setup.sh
+      - shellcheck -e SC1117 -s bash setup.sh
 
   - env:
       - task=ubuntu1404
