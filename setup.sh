@@ -148,7 +148,7 @@ ln -s /usr/bin/add-apt-ppa /usr/bin/apt-add-ppa
 
 # Unitial setup
 curl --compressed -L -o- https://github.com/PeterDaveHello/Unitial/raw/master/setup.sh | HOME='/root/' bash
-if [ ! -z "$SUDO_USER" ]; then
+if [ -n "$SUDO_USER" ]; then
   curl --compressed -L -o- https://github.com/PeterDaveHello/Unitial/raw/master/setup.sh | sudo -u "$SUDO_USER" bash
 fi
 
