@@ -1,5 +1,5 @@
 language: minimal
-dist: xenial
+dist: focal
 git:
   depth: 5
 
