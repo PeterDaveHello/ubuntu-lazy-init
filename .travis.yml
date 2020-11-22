@@ -15,11 +15,6 @@ matrix:
       - shellcheck -e SC1117 -s bash setup.sh
 
   - env:
-      - task=ubuntu1404
-    script:
-    - sudo ./setup.sh
-
-  - env:
       - task=ubuntu1604
     services:
     - docker
@@ -32,3 +27,10 @@ matrix:
     - docker
     script:
     - docker run -i --rm -v "${PWD}:/ci-temp/" ubuntu:18.04 bash -c "/ci-temp/setup.sh"
+
+  - env:
+      - task=ubuntu2004
+    services:
+    - docker
+    script:
+    - docker run -i --rm -v "${PWD}:/ci-temp/" ubuntu:20.04 bash -c "/ci-temp/setup.sh"
