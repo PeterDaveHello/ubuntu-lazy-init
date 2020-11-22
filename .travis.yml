@@ -16,21 +16,18 @@ matrix:
 
   - env:
       - task=ubuntu1604
-    services:
-    - docker
+    dist: xenial
     script:
-    - docker run -i --rm -v "${PWD}:/ci-temp/" ubuntu:16.04 bash -c "/ci-temp/setup.sh"
+      - sudo ./setup.sh
 
   - env:
       - task=ubuntu1804
-    services:
-    - docker
+    dist: bionic
     script:
-    - docker run -i --rm -v "${PWD}:/ci-temp/" ubuntu:18.04 bash -c "/ci-temp/setup.sh"
+      - sudo ./setup.sh
 
   - env:
       - task=ubuntu2004
-    services:
-    - docker
+    dist: focal
     script:
-    - docker run -i --rm -v "${PWD}:/ci-temp/" ubuntu:20.04 bash -c "/ci-temp/setup.sh"
+      - sudo ./setup.sh
